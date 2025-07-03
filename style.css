@@ -313,6 +313,7 @@ font-family: "Inter", sans-serif;
     width: 100%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    height: 180px;
   }
 
   /* #nav-items.show {
@@ -334,13 +335,13 @@ font-family: "Inter", sans-serif;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 20px;
+    padding: 0;
     height: auto;
   }
 
   .s-words {
     font-size: 40px;
-    line-height: 1.2;
+    line-height: 1;
   }
   .s-words br {
     display: none;
@@ -351,16 +352,29 @@ font-family: "Inter", sans-serif;
   }
 
   .carousel {
-    width: 100%;
-    max-width: 350px;
+    width: 90%;
+    max-width: 450px;
   }
 
+  .shop{
+    height: 100%;
+  }
   .view {
     margin: 0 auto;
     display: block;
+    height: 60px;
+    width: 80px;
+    text-align: center;
+    font-size:x-large;
+    
   }
+
+  
 }
 
 
 
 /* trial-end */
+
+/* sales-start */
+/* sales-end */
