@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sale Products - Premium Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+     
+<div class="navbar">
+        
+        <div class="items">
+            <a href="/index.html">Home</a>
+            <a href="/Gallery/index.html">Gallery</a>
+            <a href="">About</a>
+            <a href="/shop/index.html">Shop</a>
+            <div class="after"></div>
+            <div class="header-actions">
+                    <button class="btn-icon"><i class="fas fa-search"></i></button>
+                    <button class="btn-icon"><i class="fas fa-heart"></i></button>
+                    <button class="btn-icon cart-btn" onclick="openCheckout()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+        </div>
+     </div>
+
+
+<!-- Last -->
+
+    <!-- <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1><i class="fas fa-store"></i> Printspoint Designers</h1>
+                </div>
+                <nav class="nav">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#" class="nav-link active">Sale</a>
+                    <a href="#" class="nav-link">Categories</a>
+                    <a href="#" class="nav-link">About</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn-icon"><i class="fas fa-search"></i></button>
+                    <button class="btn-icon"><i class="fas fa-heart"></i></button>
+                    <button class="btn-icon cart-btn" onclick="openCheckout()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header> -->
+
+    <!-- Hero Section -->
+   
+
+    <!-- Filters -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label for="category-filter">Category:</label>
+                    <select id="category-filter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="printing">Printing</option>
+                        <option value="clothing">Events </option>
+                        <option value="home">NGO'S</option>
+                        <option value="sports">Campaign</option>
+                        <option value="gifts">Gifts</option>
+                        <option value="sports">Household Items</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="sports">Printing Tools</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="price-filter">Max Price:</label>
+                    <select id="price-filter" class="filter-select">
+                        <option value="">Any Price</option>
+                        <option value="50">Under $50</option>
+                        <option value="100">Under $100</option>
+                        <option value="200">Under $200</option>
+                        <option value="500">Under $500</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="discount-filter">Discount:</label>
+                    <select id="discount-filter" class="filter-select">
+                        <option value="">Any Discount</option>
+                        <option value="20">20% or more</option>
+                        <option value="40">40% or more</option>
+                        <option value="60">60% or more</option>
+                    </select>
+                </div>
+                <button id="clear-filters" class="btn-secondary">Clear Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <main class="main">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="section-title">Sale Products</h2>
+                <div class="products-count">
+                    <span id="products-count">0 products found</span>
+                </div>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading products...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <div class="empty-content">
+                    <i class="fas fa-shopping-bag empty-icon"></i>
+                    <h3>No Sale Products Available</h3>
+                    <p>We're currently updating our sale inventory. Please check back later for amazing deals!</p>
+                    <button class="btn-primary" onclick="window.location.reload()">Refresh Page</button>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="error-state" class="error-state" style="display: none;">
+                <div class="error-content">
+                    <i class="fas fa-exclamation-triangle error-icon"></i>
+                    <h3>API Configuration Required</h3>
+                    <p id="error-message">To display sale products, please configure a product API endpoint.</p>
+                    <div class="api-setup-guide">
+                        <h4>Setup Instructions:</h4>
+                        <ol>
+                            <li>Set <code>window.PRODUCTS_API_URL</code> to your API endpoint</li>
+                            <li>Ensure your API returns products with <code>onSale: true</code></li>
+                            <li>Expected format: <code>{ products: [...] }</code></li>
+                        </ol>
+
+                    </div>
+                    <button class="btn-primary" onclick="loadProducts()">Try Again</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="products-grid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- <div class="footer-section">
+                    <h3>Premium Store</h3>
+                    <p>Your trusted partner for quality products at unbeatable prices.</p>
+                </div> -->
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Premium Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="checkout-modal" style="display: none;">
+        <div class="checkout-overlay" onclick="closeCheckout()"></div>
+        <div class="checkout-container">
+            <div class="checkout-header">
+                <h2><i class="fas fa-shopping-cart"></i> Checkout</h2>
+                <button class="close-btn" onclick="closeCheckout()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="checkout-content">
+                <!-- Cart Items Section -->
+                <div class="checkout-section">
+                    <h3>Your Items</h3>
+                    <div id="checkout-items" class="checkout-items">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    <div class="cart-empty" id="cart-empty" style="display: none;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Your cart is empty</p>
+                        <button class="btn-secondary" onclick="closeCheckout()">Continue Shopping</button>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                
+
+                <!-- Shipping Information -->
+                <div class="checkout-section">
+                    <h3>Delivery Information</h3>
+                    <form id="shipping-form" class="checkout-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first-name">First Name *</label>
+                                <input type="text" id="first-name" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name *</label>
+                                <input type="text" id="last-name" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group" >
+                            <label for="address">Phone Number *</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State *</label>
+                                <input type="text" id="state" name="state" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="zip">ZIP Code *</label>
+                                <input type="text" id="zip" name="zip" required>
+                            </div>
+                        </div>
+                       
+                    </form>
+                </div>
+                
+
+                <div class="checkout-section order-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="checkout-subtotal">Ksh0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="checkout-shipping">Ksh9.99</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax:</span>
+                        <span id="checkout-tax">Included</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="checkout-total">Ksh 0.00</span>
+                    </div>
+                </div>
+
+
+                <!-- Payment Information -->
+                <!-- <div class="checkout-section">
+                    <h3>Lipa na Mpesa</h3><img src="mpesa.png" alt="" srcset="" width="100px" height="100px">
+                    <form id="payment-form" class="checkout-form">
+                        <div class="form-group">
+                            <label for="card-number">Phone Number *(You will receive an M-pesa Prompt)</label>
+                            <input type="text" id="card-number" name="cardNumber" placeholder="0712345678" maxlength="10" required>
+                        </div>
+                        <div class="form-row">
+                            
+
+                            
+                            <div class="form-group">
+                                <label for="expiry">Expiry Date *</label>
+                                <input type="text" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5" required>
+                            </div> 
+                           <div class="form-group">
+                                <label for="cvv">CVV *</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-name">Name on Card *</label>
+                            <input type="text" id="card-name" name="cardName" required>
+                        </div>
+                    </form>
+                </div> -->
+
+
+
+
+                <!-- Contact Information -->
+                <div class="checkout-section">
+                    <!-- <h3>Contact Information</h3> -->
+                    <h3>Lipa na Mpesa</h3><img src="mpesa.png" alt="" srcset="" width="100px" height="100px">
+                    <form id="form" class="checkout-form"  >
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number *</label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="0712345678" required>
+                            <small class="form-help">We'll use this number to confirm your order and provide updates</small>
+                        </div>
+                        <div class="payment-note">
+                            <div class="payment-info">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div>
+                                    <h4>Payment via Phone</h4>
+                                    <p>Our team will contact you at the provided number to process payment securely.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+                <!-- Checkout Actions -->
+                <div class="checkout-actions">
+                    <button class="btn-secondary" onclick="closeCheckout()">Continue Shopping</button>
+                    <button type="submit" class="btn-primary checkout-btn" onclick="processCheckout()">
+                        <i class="fas fa-lock"></i> Purchase
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+       window.PRODUCTS_API_URL = 'http://localhost:2000';
+     </script>
+    <script src="script.js"></script>
+</body>
+</html>
